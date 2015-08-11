@@ -12,8 +12,8 @@ use backend\models\Pegawai;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\db\Query;
-$connection = \Yii::$app->db;
+// use yii\db\Query;
+//$connection = \Yii::$app->db;
 
 /**
  * TmasterController implements the CRUD actions for Tmaster model.
@@ -69,11 +69,15 @@ class TmasterController extends Controller
         $model = new Tmaster();
 
         if ($model->load(Yii::$app->request->post())){
+            $model->datecreated = date('Y-m -d');
+            //$models->tgllhpsp = x1 ;
+           // $models->tglbc11 = x2 ;
+           // if x1>x2 
             if( $model -> validate() and $model->save()) {
         }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
             ]);
         }
@@ -150,7 +154,11 @@ class TmasterController extends Controller
          $OpenTBS->VarRef['xberat']= $tmaster ->berat;
          $OpenTBS->VarRef['xbc11']= $tmaster -> bc11;
          $OpenTBS->VarRef['xtglbc11']= $tmaster -> tglbc11;
-       
+           $OpenTBS->VarRef['xbc12']= $tmaster -> bc12;
+         $OpenTBS->VarRef['xtglbc12']= $tmaster -> tglbc12;
+           $OpenTBS->VarRef['xbc13']= $tmaster -> bc13;
+         $OpenTBS->VarRef['xtglbc13']= $tmaster -> tglbc13;
+         $OpenTBS->VarRef['xlhpsp']= $tmaster -> lhpsp;
         $data = [];
         foreach($kapal as $kapals){
             $data[] = [

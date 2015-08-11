@@ -64,8 +64,8 @@ class Tmaster extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nolphsp', 'tgllhpsp', 'idkapal', 'idagen', 'idpelasal', 'tglpeldatang', 'idchecking', 'nippemeriksa', 'nipatasan1'], 'required'],
-            [['tgllhpsp', 'tglpeldatang', 'tglpeltujuan', 'tglbc11', 'tglbc12', 'tglbc13', 'datecreated'], 'safe'],
+            [['nolphsp', 'tgllhpsp', 'idkapal', 'idagen', 'idpelasal',  'idchecking', 'nippemeriksa', 'nipatasan1'], 'required'],
+            [['tgllhpsp', 'tglpeldatang', 'tglpeltujuan', 'tglbc11', 'tglpeldatang','tglbc12', 'tglbc13', 'datecreated'], 'safe'],
             [['idkapal', 'idagen', 'jumlahkemasan', 'idkantor'], 'integer'],
             [['jenisdokumen', 'idchecking'], 'string'],
             [['berat', 'volume'], 'number'],

@@ -2,6 +2,15 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\daterange\DateRangePicker;
+
+
+
+echo '<label class="control-label">Date Range</label>';
+echo '<div class="drp-container">';
+
+
+
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\TmasterSearch */
@@ -20,7 +29,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'nolphsp') ?>
 
     <?= $form->field($model, 'tgllhpsp') ?>
-
+        
     <?= $form->field($model, 'idkapal') ?>
 
     <?= $form->field($model, 'voy') ?>

@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Tmaster;
+use backend\models\TmasterSearch;
 
 /**
  * TmasterSearch represents the model behind the search form about `backend\models\Tmaster`.
@@ -18,8 +19,8 @@ class TmasterSearch extends Tmaster
     public function rules()
     {
         return [
-            [['id', 'idkapal', 'idagen', 'jumlahkemasan', 'idkantor'], 'integer'],
-            [['nolphsp', 'tgllhpsp', 'voy', 'idpelasal', 'tglpeldatang', 'idpeltujuan', 'tglpeltujuan', 'jenisdokumen', 'jenisbarang', 'satuan', 'idchecking', 'bc11', 'tglbc11', 'daftarbekal', 'bc12', 'tglbc12', 'bc13', 'tglbc13', 'lhpsp', 'nippemeriksa', 'nipatasan1', 'nipatasan2', 'datecreated', 'usercreated'], 'safe'],
+            [['id',  'idagen', 'jumlahkemasan', 'idkantor'], 'integer'],
+            [['nolphsp', 'idkapal','tgllhpsp', 'voy', 'idpelasal', 'tglpeldatang', 'idpeltujuan', 'tglpeltujuan', 'jenisdokumen', 'jenisbarang', 'satuan', 'idchecking', 'bc11', 'tglbc11', 'daftarbekal', 'bc12', 'tglbc12', 'bc13', 'tglbc13', 'lhpsp', 'nippemeriksa', 'nipatasan1', 'nipatasan2', 'datecreated', 'usercreated'], 'safe'],
             [['berat', 'volume'], 'number'],
         ];
     }
@@ -42,7 +43,9 @@ class TmasterSearch extends Tmaster
      */
     public function search($params)
     {
-        $query = Tmaster::find();
+        //$date_from= 'date_from',
+      //  $date_to = 'date_to
+            $query = Tmaster::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,12 +57,18 @@ class TmasterSearch extends Tmaster
             // uncomment the following line if you do not want to any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
-        }
+        } 
+
+/* bmuat query dulu
+ * 
+ */
+    $query->joinWith('idkapal0');
+
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'tgllhpsp' => $this->tgllhpsp,
-            'idkapal' => $this->idkapal,
+         //   'tgllhpsp' => $this->tgllhpsp,
+           
             'idagen' => $this->idagen,
             'tglpeldatang' => $this->tglpeldatang,
             'tglpeltujuan' => $this->tglpeltujuan,
@@ -72,8 +81,15 @@ class TmasterSearch extends Tmaster
             'datecreated' => $this->datecreated,
             'idkantor' => $this->idkantor,
         ]);
-
-        $query->andFilterWhere(['like', 'nolphsp', $this->nolphsp])
+if(isset($this->tgllhpsp) && $this->tgllhpsp!=''){
+                  $date_explode = explode("TO", $this->tgllhpsp);
+                  $date1 = trim($date_explode[0]);
+                   $date2 = trim($date_explode[1]);
+              $query->andFilterWhere(['between', 'tgllhpsp',$date1,$date2]);  
+                }
+           
+                
+      $query->andFilterWhere(['like', 'nolphsp', $this->nolphsp])
             ->andFilterWhere(['like', 'voy', $this->voy])
             ->andFilterWhere(['like', 'idpelasal', $this->idpelasal])
             ->andFilterWhere(['like', 'idpeltujuan', $this->idpeltujuan])
@@ -89,8 +105,17 @@ class TmasterSearch extends Tmaster
             ->andFilterWhere(['like', 'nippemeriksa', $this->nippemeriksa])
             ->andFilterWhere(['like', 'nipatasan1', $this->nipatasan1])
             ->andFilterWhere(['like', 'nipatasan2', $this->nipatasan2])
-            ->andFilterWhere(['like', 'usercreated', $this->usercreated]);
-
+            ->andFilterWhere(['like', 'usercreated', $this->usercreated])
+              
+            ->andFilterWhere(['like', 'kapal.kapal_nama', $this->idkapal])   
+                
+                
+                
+         
+            //->andFilterWhere(['>=', 'tgllhpsp', $this->startDate])
+           //->andFilterWhere(['<=', 'tgllhpsp', $this->endDate])
+                ;
+        
         return $dataProvider;
     }
 }

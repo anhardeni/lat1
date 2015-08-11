@@ -11,14 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
-    'components' => [
-        'pdf' => [
-        'class' => Pdf::classname(),
-        'format' => Pdf::FORMAT_A4,
-        'orientation' => Pdf::ORIENT_PORTRAIT,
-        'destination' => Pdf::DEST_BROWSER,
-        // refer settings section for all configuration options
-    ],
+    
         'log' => [
             'targets' => [
                 [
@@ -27,6 +20,6 @@ return [
                 ],
             ],
         ],
-    ],
+    
     'params' => $params,
 ];
